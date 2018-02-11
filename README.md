@@ -1,6 +1,8 @@
 How to set up automatic QA sites on PR events using Traefik.
 ====
 
+<p align="center"><img src="process.png"></p>
+
 ## Abstract
 
 Automatically creating a version of an application based on
