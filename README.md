@@ -1,4 +1,4 @@
-How to set up a build projec QA site on PR events using Traefik.
+How to set up automatic QA sites on PR events using Traefik.
 ====
 
 ## Abstract
