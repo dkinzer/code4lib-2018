@@ -46,8 +46,9 @@ settled on using Traefik with the docker back-end:
   checkout PR branch or pull latest changes on branch, run `docker-compose up
   -d` from within the PR repo source directory etc. We could of course do this
   inside of a Jenkins' job shell script, but that can get unwieldy to maintain,
-  so instead I've encapsulated this concern into a gem created named Roper that
-  I will use from withing the Jenkins job.
+  so instead I've encapsulated this concern into a gem created named
+  [Roper](https://github.com/tulibraries/roper) that I will use from withing
+  the Jenkins job.
 
 
 ## Execution
@@ -139,7 +140,7 @@ parameterized build we can run rebuilds in the cases where a build goes wrong
 For the sake of brevity we'll paraphrase each of the jobs below with links to
 the full job definitions:
 
-#### Trigger PR QA Build
+#### [Trigger PR QA Build](https://github.com/dkinzer/code4lib-2018/blob/master/Trigger%20PR%20QA%20Build/config.xml)
 This job leverages the Jenkins Generic Trigger plugin. It uses JSONPaths to
 parse the GitHub web-hook payload:
 
@@ -162,7 +163,7 @@ from a specific organization and repository.
 
 For the build step we use the parameters we collected to trigger a parameterized job.
 
-#### Parameterized Roper Builder
+#### [Parameterized Roper Builder](https://github.com/dkinzer/code4lib-2018/tree/master/Parameterized%20Roper%20Builder)
 The receiving job is a parameterized job that simply calls out to the actual building process.
 
 ```bash
