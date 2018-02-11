@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>Webhook to trigger a QA site build for a PR against tulibraries/tul_cob (for now).</description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>true</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers>
+    <org.jenkinsci.plugins.gwt.GenericTrigger plugin="generic-webhook-trigger@1.20">
+      <spec></spec>
+      <genericVariables>
+        <org.jenkinsci.plugins.gwt.GenericVariable>
+          <expressionType>JSONPath</expressionType>
+          <key>repo</key>
+          <value>$.pull_request.head.repo.full_name</value>
+          <regexpFilter></regexpFilter>
+        </org.jenkinsci.plugins.gwt.GenericVariable>
+        <org.jenkinsci.plugins.gwt.GenericVariable>
+          <expressionType>JSONPath</expressionType>
+          <key>branch</key>
+          <value>$.pull_request.head.ref</value>
+          <regexpFilter></regexpFilter>
+        </org.jenkinsci.plugins.gwt.GenericVariable>
+        <org.jenkinsci.plugins.gwt.GenericVariable>
+          <expressionType>JSONPath</expressionType>
+          <key>sha</key>
+          <value>$.pull_request.head.sha</value>
+          <regexpFilter></regexpFilter>
+        </org.jenkinsci.plugins.gwt.GenericVariable>
+        <org.jenkinsci.plugins.gwt.GenericVariable>
+          <expressionType>JSONPath</expressionType>
+          <key>action</key>
+          <value>$.action</value>
+          <regexpFilter></regexpFilter>
+        </org.jenkinsci.plugins.gwt.GenericVariable>
+      </genericVariables>
+      <regexpFilterText>$X_GitHub_Event $repo $action</regexpFilterText>
+      <regexpFilterExpression>pull_request tulibraries\/tul_cob (open|close|synchronize)</regexpFilterExpression>
+      <genericHeaderVariables>
+        <org.jenkinsci.plugins.gwt.GenericHeaderVariable>
+          <key>X-GitHub-Event</key>
+          <regexpFilter></regexpFilter>
+        </org.jenkinsci.plugins.gwt.GenericHeaderVariable>
+      </genericHeaderVariables>
+    </org.jenkinsci.plugins.gwt.GenericTrigger>
+  </triggers>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.plugins.parameterizedtrigger.TriggerBuilder plugin="parameterized-trigger@2.35.2">
+      <configs>
+        <hudson.plugins.parameterizedtrigger.BlockableBuildTriggerConfig>
+          <configs>
+            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+              <properties>action=$action
+repo=$repo
+branch=$branch
+sha=$sha</properties>
+              <textParamValueOnNewLine>false</textParamValueOnNewLine>
+            </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+          </configs>
+          <projects>Parameterized Roper Builder</projects>
+          <condition>ALWAYS</condition>
+          <triggerWithNoParameters>false</triggerWithNoParameters>
+          <triggerFromChildProjects>false</triggerFromChildProjects>
+          <buildAllNodesWithLabel>false</buildAllNodesWithLabel>
+        </hudson.plugins.parameterizedtrigger.BlockableBuildTriggerConfig>
+      </configs>
+    </hudson.plugins.parameterizedtrigger.TriggerBuilder>
+  </builders>
+  <publishers/>
+  <buildWrappers>
+    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.13">
+      <bindings class="empty-list"/>
+    </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
+  </buildWrappers>
+</project>
