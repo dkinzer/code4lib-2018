@@ -223,3 +223,41 @@ available to docker-compose. Thus in the example above:
 `ROPER_REPO_BRANCH` is made available by Roper. For more details on Roper see
 the [Roper documentation](http://www.rubydoc.info/github/tulibraries/roper/master)
 
+## Conclusion/Caveats
+
+I want to end this post by touching a  little on another incentive for this
+project and also touch on some of the drawbacks of this particular solution.
+
+So I've shown one way that can be used to generate sites based on PRs.
+I mentioned in the abstract that one incentive for implementing such a feature
+is to facilitate quicker turn around on feature iterations.  In a nutshell, the
+idea here is that we lower the bar for being able to review a PR by
+automatically building a version of the app based on the PR.  Thus, for
+example, a developer would not have to take time to download and build the PR
+locally to review some aspects of the PR. But this same feature can be used by
+a non developer. In other words, we can make it easier for non developers to be
+involved earlier in the feature iteration process.  This is of course a very
+important incentive.
+
+Another incentive for this project, as I see it, is that it's a cost effective
+alternative to similar commercial solutions. (Well, at least one other solution
+I know of which cost a previous employer of mine $300 per month).
+
+That said, what is the cost of this solution?  Well that will depend on the
+need and how much resources your app requires.  By need I mean the calculus of
+the max number of PRs you expect to be opened multiplied by the requirements of
+your apps.  So, for example I have an app that requires about 800MB to run.
+And on a small Linode VM, I handle about 4 PRs before the little machine starts
+running out of memory and breaking.
+
+And that also gets at one of the drawbacks of the process as I describe it
+here. Since (depending on how much space and memory your app requires) the
+resources of the machine that is providing the service can be quickly exhausted
+under certain stresses.
+
+But considering that you may pay up to $300/month for a similar feature using
+a vendor solution, it's likely you can provision a VM node with plenty of
+resources for less than that.
+
+That said, it's important to note that Traefik can also be set on other
+back-ends that can potentially scale for just about any use case.
